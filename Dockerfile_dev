@@ -1,0 +1,9 @@
+FROM 117503445/dev-python
+
+WORKDIR /workspace/pptx-speech
+
+COPY ./script/init.sh /script/init.sh
+
+RUN /script/init.sh
+
+SHELL [ "/bin/zsh" ]

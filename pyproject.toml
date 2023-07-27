@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "pptx-speech"
+version = "0.1.0"
+description = ""
+authors = ["117503445 <t117503445@gmail.com>"]
+readme = "README.md"
+packages = [{include = "pptx_speech"}]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+gtts = ">=2.2"
+urllib3 = ">=1.2"
+python-pptx = ">=0.6"
+pymupdf = ">=1.1"
+progress = ">=1.6"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
