@@ -1,0 +1,11 @@
+.git
+.venv
+data
+.vscode
+.mypy_cache
+doc
+vsc_extensions
+docker-compose.yml
+.gitignore
+Dockerfile_dev
+Dockerfile

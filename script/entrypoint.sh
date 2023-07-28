@@ -1,0 +1,1 @@
+/root/.local/bin/poetry run python ./pptx_speech/cli.py
