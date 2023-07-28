@@ -1,3 +1,5 @@
 vsc_extensions
 1.sh
 __pycache__
+.mypy_cache
+data

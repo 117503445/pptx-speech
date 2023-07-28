@@ -9,8 +9,11 @@ packages = [{include = "pptx_speech"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 azure-cognitiveservices-speech = "^1.30.0"
+python-pptx = "^0.6.21"
+htutil = "^3.2.0"
 
-
+[tool.poetry.group.dev.dependencies]
+black = "^23.7.0"
 
 [build-system]
 requires = ["poetry-core"]
