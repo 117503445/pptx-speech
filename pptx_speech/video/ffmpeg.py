@@ -9,24 +9,26 @@ def make_video(dir_image: Path, dir_audio: Path, dir_output: Path):
     file_video_list: list[Path] = []
 
     for file_image in images:
-        print(file_image)
         file_audio = dir_audio / f"{file_image.stem}.wav"
         file_output = dir_output / f"{file_image.stem}.mp4"
         file_video_list.append(file_output)
 
-        subprocess.run(
-            [
-                "ffmpeg",
-                "-y",  # overwrite
-                "-i",
-                str(file_image),
-                "-i",
-                str(file_audio),
-                "-vcodec",
-                "libx264",
-                str(file_output),
-            ]
-        )
+        if not file_output.exists():
+
+            print(file_image)
+            subprocess.run(
+                [
+                    "ffmpeg",
+                    "-y",  # overwrite
+                    "-i",
+                    str(file_image),
+                    "-i",
+                    str(file_audio),
+                    "-vcodec",
+                    "libx264",
+                    str(file_output),
+                ]
+            )
 
         # subprocess.run([
         #     'ffmpeg',
