@@ -57,20 +57,21 @@ def make_video(dir_image: Path, dir_audio: Path, dir_output: Path):
     file.write_text(file_list, files)
 
     file_output = dir_output / "output.mp4"
-    with open(dir_output / "combine.log", "w") as f:
-        subprocess.run(
-            [
-                "ffmpeg",
-                "-f",
-                "concat",
-                "-i",
-                # str(file_list.absolute()),
-                str(file_list),
-                "-c",
-                "copy",
-                "-y",
-                str(file_output),
-            ],
-            stdout=f,
-            stderr=f,
-        )
+    if not file_output.exists():
+        with open(dir_output / "combine.log", "w") as f:
+            subprocess.run(
+                [
+                    "ffmpeg",
+                    "-f",
+                    "concat",
+                    "-i",
+                    # str(file_list.absolute()),
+                    str(file_list),
+                    "-c",
+                    "copy",
+                    "-y",
+                    str(file_output),
+                ],
+                stdout=f,
+                stderr=f,
+            )

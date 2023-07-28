@@ -8,7 +8,7 @@ from htutil import file
 
 dir_data = Path("data")
 
-task_name = "example-animation"
+task_name = "cons-1"
 
 dir_input = dir_data / "input" / task_name
 dir_output = dir_data / "output" / task_name
