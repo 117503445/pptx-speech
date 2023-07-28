@@ -2,14 +2,14 @@ version: '3.9'
 services:
   pptx-speech-dev:
     build:
-      # context: ./src/flow_pdf
+      context: ./src/pptx-speech
       dockerfile: Dockerfile_dev
 
     container_name: pptx-speech-dev
     # restart: unless-stopped
     volumes:
-      - './:/workspace/pptx-speech'
-      - './vsc_extensions:/root/.vscode-server/extensions'
+      - './src/pptx-speech:/workspace/pptx-speech'
+      - './vsc_extensions/pptx-speech:/root/.vscode-server/extensions'
     # ports:
     #   - '8080:8080'
     stdin_open: true
