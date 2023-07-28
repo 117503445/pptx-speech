@@ -30,6 +30,12 @@ docker run -it --rm -v $PWD:/workspace/pptx-speech/data 117503445/pptx-speech --
 
 `117503445/pptx-speech` 会定位当前文件夹下的 PDF 和 PPTX。首先从 PPTX 中提取备注并生成语音，然后将 PDF 转为图片，最后将语音和图片合成视频，输出至此文件夹。
 
+[可选] 国内用户可以从阿里源更快地拉取镜像
+
+```sh
+docker pull registry.cn-hangzhou.aliyuncs.com/117503445-mirror/pptx-speech && docker image tag registry.cn-hangzhou.aliyuncs.com/117503445-mirror/pptx-speech 117503445/pptx-speech
+```
+
 ## 动画处理
 
 如果 PPTX 包含流程图等动画，可以借助本节的方法，把动画页转为多张静态页，再进行视频转换。需要注意的是，最后的视频中只会包含动画页在每次点击后的静态图片，不会展现出页内动画效果。
