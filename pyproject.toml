@@ -11,6 +11,7 @@ python = "^3.11"
 azure-cognitiveservices-speech = "^1.30.0"
 python-pptx = "^0.6.21"
 htutil = "^3.2.0"
+pymupdf = "^1.22.5"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.7.0"

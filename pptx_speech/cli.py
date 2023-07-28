@@ -1,5 +1,6 @@
 from note import get_notes
 from tts.azure import AzureTTS
+from image.pdf import save_images
 
 from pathlib import Path
 from htutil import file
@@ -30,3 +31,8 @@ for file_note in dir_notes.glob("*.txt"):
     file_audio = dir_audio / f"{file_note.stem}.wav"
     if not file_audio.exists():
         azureTTS.tts(file.read_text(file_note), file_audio)
+
+file_pdf = dir_input / "file.pdf"
+dir_image = dir_output / "image"
+dir_image.mkdir(parents=True, exist_ok=True)
+save_images(file_pdf, dir_image)
