@@ -3,3 +3,4 @@ vsc_extensions
 __pycache__
 .mypy_cache
 data
+config.yaml
