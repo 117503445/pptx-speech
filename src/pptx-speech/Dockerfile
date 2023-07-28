@@ -12,4 +12,4 @@ RUN /root/.local/bin/poetry env use python3.11 && /root/.local/bin/poetry instal
 
 COPY . .
 
-ENTRYPOINT [ "bash", "/workspace/pptx-speech/script/entrypoint.sh" ]
+ENTRYPOINT [ "/root/.local/bin/poetry", "run", "python", "./pptx_speech/cli.py"]
