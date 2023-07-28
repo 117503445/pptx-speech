@@ -13,7 +13,5 @@
     // },
     "code-runner.enableAppInsights": false,
     "code-runner.customCommand": "poetry run python /workspace/pptx-speech/pptx_speech/dev.py",
-    "markdown.copyFiles.destination": {
-        "*": "doc/"
-    }
+
 }

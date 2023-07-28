@@ -4,6 +4,10 @@
 
 ## 使用方法
 
+目前基于 Azure 生成语音，需要注册 Azure 账号并创建语音服务，具体步骤参考 [Azure 文档](https://learn.microsoft.com/zh-cn/azure/ai-services/speech-service/get-started-text-to-speech?tabs=linux%2Cterminal&pivots=programming-language-python)，获取 语音资源密钥和区域
+
+![Alt text](doc/image-7.png)
+
 把 PPTX 每页的讲稿写在备注里，如 [example.pptx](doc/example.pptx) 所示
 
 ![Alt text](doc/image.png)
@@ -18,7 +22,13 @@
 
 - Windows: TODO
 
-把 PDF，PPTX 放到指定目录，运行脚本，得到视频 TODO
+把 PDF，PPTX 放到空文件夹，并在此目录下运行脚本，记得修改 azure-key 和 azure-region
+
+```sh
+docker run -it --rm -v $PWD:/workspace/pptx-speech/data 117503445/pptx-speech --azure-key feng-kuang-xing-qi-si-vivo-50 --azure-region eastasi
+```
+
+得到视频
 
 ## 动画处理
 
