@@ -1,6 +1,7 @@
 from note import get_notes
 from tts.azure import AzureTTS
 from image.pdf import save_images
+from video.ffmpeg import make_video
 
 from pathlib import Path
 from htutil import file
@@ -36,3 +37,7 @@ file_pdf = dir_input / "file.pdf"
 dir_image = dir_output / "image"
 dir_image.mkdir(parents=True, exist_ok=True)
 save_images(file_pdf, dir_image)
+
+dir_video = dir_output / "video"
+dir_video.mkdir(parents=True, exist_ok=True)
+make_video(dir_image, dir_audio, dir_video)

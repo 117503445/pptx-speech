@@ -3,7 +3,8 @@ from pathlib import Path
 
 class AzureTTS:
     def __init__(self, key: str, region: str):
-        self.speech_config = speechsdk.SpeechConfig(subscription=key, region=region)
+        self.speech_config = speechsdk.SpeechConfig(subscription=key, region=region, speech_recognition_language='zh')
+        self.speech_config.speech_synthesis_voice_name='zh-CN-YunxiNeural'
 
     def tts(self, text: str, filename: Path):
         audio_config = speechsdk.audio.AudioOutputConfig(filename=str(filename.absolute()))

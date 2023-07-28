@@ -22,4 +22,6 @@ RUN curl -sSL https://install.python-poetry.org | python3.11 -
 RUN /root/.local/bin/poetry config virtualenvs.in-project true
 RUN /root/.local/bin/poetry env use python3.11
 
+RUN apt-get install -y ffmpeg
+
 SHELL [ "/bin/bash" ]
