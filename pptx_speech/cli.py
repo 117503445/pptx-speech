@@ -8,12 +8,13 @@ from htutil import file
 
 dir_data = Path("data")
 
-task_name = "poh"
+task_name = "example-animation"
 
 dir_input = dir_data / "input" / task_name
 dir_output = dir_data / "output" / task_name
 dir_output.mkdir(parents=True, exist_ok=True)
 
+print("notes")
 file_pptx = dir_input / "file.pptx"
 notes = get_notes(file_pptx)
 dir_notes = dir_output / "notes"
@@ -23,12 +24,10 @@ for i, note in enumerate(notes):
         note = '此页无备注，请注意'
     file.write_text(dir_notes / f"{i}.txt", note)
 
-
+print("tts")
 cfg = file.read_yaml("config.yaml")
 azure_cfg = cfg['tts']['azure']
 azureTTS = AzureTTS(azure_cfg['key'], azure_cfg['region'])
-
-print("tts")
 dir_audio = dir_output / "audio"
 dir_audio.mkdir(parents=True, exist_ok=True)
 for file_note in dir_notes.glob("*.txt"):

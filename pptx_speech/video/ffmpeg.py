@@ -14,21 +14,23 @@ def make_video(dir_image: Path, dir_audio: Path, dir_output: Path):
         file_video_list.append(file_output)
 
         if not file_output.exists():
-
             print(file_image)
-            subprocess.run(
-                [
-                    "ffmpeg",
-                    "-y",  # overwrite
-                    "-i",
-                    str(file_image),
-                    "-i",
-                    str(file_audio),
-                    "-vcodec",
-                    "libx264",
-                    str(file_output),
-                ]
-            )
+            with open(dir_output / f"{file_image.stem}.log", "w") as f:
+                subprocess.run(
+                    [
+                        "ffmpeg",
+                        "-y",  # overwrite
+                        "-i",
+                        str(file_image),
+                        "-i",
+                        str(file_audio),
+                        "-vcodec",
+                        "libx264",
+                        str(file_output),
+                    ],
+                    stdout=f,
+                    stderr=f,
+                )
 
         # subprocess.run([
         #     'ffmpeg',
@@ -55,17 +57,20 @@ def make_video(dir_image: Path, dir_audio: Path, dir_output: Path):
     file.write_text(file_list, files)
 
     file_output = dir_output / "output.mp4"
-    subprocess.run(
-        [
-            "ffmpeg",
-            "-f",
-            "concat",
-            "-i",
-            # str(file_list.absolute()),
-            str(file_list),
-            "-c",
-            "copy",
-            "-y",
-            str(file_output),
-        ]
-    )
+    with open(dir_output / "combine.log", "w") as f:
+        subprocess.run(
+            [
+                "ffmpeg",
+                "-f",
+                "concat",
+                "-i",
+                # str(file_list.absolute()),
+                str(file_list),
+                "-c",
+                "copy",
+                "-y",
+                str(file_output),
+            ],
+            stdout=f,
+            stderr=f,
+        )
