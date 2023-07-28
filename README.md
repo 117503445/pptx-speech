@@ -25,7 +25,7 @@
 把 PDF，PPTX 放到空文件夹，并在此目录下运行脚本，记得修改 azure-key 和 azure-region
 
 ```sh
-docker run -it --rm -v $PWD:/workspace/pptx-speech/data 117503445/pptx-speech --azure-key feng-kuang-xing-qi-si-vivo-50 --azure-region eastasi
+docker run -it --rm -v $PWD:/workspace/pptx-speech/data 117503445/pptx-speech --azure-key feng-kuang-xing-qi-si-vivo-50 --azure-region eastasia
 ```
 
 得到视频
@@ -56,7 +56,7 @@ $click$
 还会出现绿色三角形
 ```
 
-其中 `$speech$` 表示这是动画页，`$click$` 表示一次点击。`$click$` 基于点击对这页的讲稿进行了分割。
+`$speech$` 表示这是动画页，`$click$` 表示一次点击。`$click$` 基于点击对这页的讲稿进行了分割。
 
 下载安装 [PPspliT 插件](https://github.com/maxonthegit/PPspliT)
 
