@@ -22,13 +22,17 @@
 
 - Windows: TODO
 
-把 PDF，PPTX 放到空文件夹，并在此目录下运行下列命令，记得修改 azure-key 和 azure-region
+把 PDF，PPTX 放到空文件夹，并保证文件名相同，如 `1.pdf` 和 `1.pptx`。
+
+在此目录下运行下列命令，记得修改 azure-key 和 azure-region
 
 ```sh
 docker run -it --rm -v $PWD:/workspace/pptx-speech/data 117503445/pptx-speech --azure-key feng-kuang-xing-qi-si-vivo-50 --azure-region eastasia
 ```
 
-`117503445/pptx-speech` 会定位当前文件夹下的 PDF 和 PPTX。首先从 PPTX 中提取备注并生成语音，然后将 PDF 转为图片，最后将语音和图片合成视频，输出至此文件夹。
+`117503445/pptx-speech` 会自动配对文件并生成视频。如将 `1.pdf` 和 `1.pptx` 生成 `1.mp4`、`2.pdf` 和 `2.pptx` 生成 `2.mp4`。
+
+具体流程为先从 PPTX 中提取备注并生成语音，然后将 PDF 转为图片，最后将语音和图片合成视频，输出至此文件夹。
 
 [可选] 国内用户可以从阿里源更快地拉取镜像
 
