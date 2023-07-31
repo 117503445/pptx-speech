@@ -51,53 +51,55 @@ def main(azure_key: Annotated[str, typer.Option(envvar="AZURE_KEY")], azure_regi
         logger.info(f'file_pptx: {file_pptx}')
         logger.info(f'file_pdf: {file_pdf}')
         
-        file_video = dir_data / f'{file_pptx.stem}.mp4'
+        file_video = file_pptx.parent / f'{file_pptx.stem}.mp4'
         if file_video.exists():
             logger.info(f'video already exists for {file_pptx}')
             continue
 
+
+        dir_tmp = file_pptx.parent / f'{file_pptx.stem}_tmp'
+        if not dir_tmp.exists():
+            dir_tmp.mkdir(parents=True, exist_ok=True)
+
+
         logger.info('get notes')
-
         notes = get_notes(file_pptx)
-        with tempfile.TemporaryDirectory() as tmp_dir_name:
-            dir_temp = Path(tmp_dir_name)
+        dir_notes = dir_tmp / "notes"
+        dir_notes.mkdir(parents=True, exist_ok=True)
+        for i, note in enumerate(notes):
+            if note == '':
+                logger.warning(f'Page {i} has no note')
+                note = '此页无备注，请注意'
+            file.write_text(dir_notes / f"{i}.txt", note)
+        
+        logger.info('tts')
+        azureTTS = AzureTTS(azure_key, azure_region)
+        dir_audio = dir_tmp / "audio"
+        dir_audio.mkdir(parents=True, exist_ok=True)
+        for file_note in dir_notes.glob("*.txt"):
+            file_audio = dir_audio / f"{file_note.stem}.wav"
+            if not file_audio.exists():
+                azureTTS.tts(file.read_text(file_note), file_audio)
 
-            dir_notes = dir_temp / "notes"
-            dir_notes.mkdir(parents=True, exist_ok=True)
+        logger.info('get image')
+        dir_image = dir_tmp / "image"
+        dir_image.mkdir(parents=True, exist_ok=True)
+        save_images(file_pdf, dir_image)
 
-            for i, note in enumerate(notes):
-                if note == '':
-                    logger.warning(f'Page {i} has no note')
-                    note = '此页无备注，请注意'
-                file.write_text(dir_notes / f"{i}.txt", note)
-            
+        logger.info('make video')
+        dir_video = dir_tmp / "video"
+        dir_video.mkdir(parents=True, exist_ok=True)
+        make_video(dir_image, dir_audio, dir_video)
 
-            logger.info('tts')
-            azureTTS = AzureTTS(azure_key, azure_region)
-            dir_audio = dir_temp / "audio"
-            dir_audio.mkdir(parents=True, exist_ok=True)
-            for file_note in dir_notes.glob("*.txt"):
-                file_audio = dir_audio / f"{file_note.stem}.wav"
-                if not file_audio.exists():
-                    azureTTS.tts(file.read_text(file_note), file_audio)
+        file_output = dir_video / "output.mp4"
+        if file_output.exists():
+            shutil.copyfile(file_output, file_video)
+        else:
+            raise Exception("failed to make video for {}".format(file_pptx))
+        
+        logger.info(f'success to make video for {file_pptx}')
 
-            logger.info('get image')
-            dir_image = dir_temp / "image"
-            dir_image.mkdir(parents=True, exist_ok=True)
-            save_images(file_pdf, dir_image)
-
-            logger.info('make video')
-            dir_video = dir_temp / "video"
-            dir_video.mkdir(parents=True, exist_ok=True)
-            make_video(dir_image, dir_audio, dir_video)
-
-            file_output = dir_video / "output.mp4"
-            if file_output.exists():
-                shutil.copyfile(file_output, file_video)
-            else:
-                raise Exception("failed to make video for {}".format(file_pptx))
-            
-            logger.info(f'success to make video for {file_pptx}')
+        shutil.rmtree(dir_tmp)
 
 
 
