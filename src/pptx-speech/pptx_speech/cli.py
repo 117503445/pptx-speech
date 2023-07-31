@@ -47,8 +47,14 @@ def main(azure_key: Annotated[str, typer.Option(envvar="AZURE_KEY")], azure_regi
             logger.error(f'No pdf file found for {file_pptx}')
             continue
 
+
         logger.info(f'file_pptx: {file_pptx}')
         logger.info(f'file_pdf: {file_pdf}')
+        
+        file_video = dir_data / f'{file_pptx.stem}.mp4'
+        if file_video.exists():
+            logger.info(f'video already exists for {file_pptx}')
+            continue
 
         logger.info('get notes')
 
@@ -87,7 +93,7 @@ def main(azure_key: Annotated[str, typer.Option(envvar="AZURE_KEY")], azure_regi
 
             file_output = dir_video / "output.mp4"
             if file_output.exists():
-                shutil.copyfile(file_output, dir_data / f'{file_pptx.stem}.mp4')
+                shutil.copyfile(file_output, file_video)
             else:
                 raise Exception("failed to make video for {}".format(file_pptx))
             
