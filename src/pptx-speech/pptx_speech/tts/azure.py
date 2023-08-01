@@ -26,9 +26,12 @@ class AzureTTS:
             
             if cancellation_details.reason == speechsdk.CancellationReason.Error:
                 if cancellation_details.error_details:
+                    filename.unlink(missing_ok=True)
                     raise Exception("Azure tts failed: {}".format(cancellation_details.error_details))
                 
+            filename.unlink(missing_ok=True)
             raise Exception("Azure tts failed: {}".format(cancellation_details.reason))
         else:
+            filename.unlink(missing_ok=True)
             raise Exception("Azure tts failed: {}".format(speech_synthesis_result.reason))
         
