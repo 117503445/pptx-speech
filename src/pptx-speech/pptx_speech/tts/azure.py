@@ -13,6 +13,7 @@ class AzureTTS:
         audio_config = speechsdk.audio.AudioOutputConfig(filename=str(filename.absolute()))
         speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=self.speech_config, audio_config=audio_config)
 
+        # todo judge is illegal ssml
         if text.startswith('<speak'):
             speech_synthesis_result = speech_synthesizer.speak_ssml_async(text).get()
         else:

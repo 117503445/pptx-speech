@@ -2,6 +2,7 @@ from note import get_notes
 from tts.azure import AzureTTS
 from image.pdf import save_images
 from video.ffmpeg import make_video
+from common.config import get_cfg
 
 from pathlib import Path
 from htutil import file
@@ -10,7 +11,7 @@ from typing_extensions import Annotated
 
 
 def main(test_mode:  Annotated[str, typer.Option()] = 'batch'):
-    cfg = file.read_yaml("config.yaml")
+    cfg = get_cfg()
     azure_cfg = cfg['tts']['azure']
     azureTTS = AzureTTS(azure_cfg['key'], azure_cfg['region'])
 
