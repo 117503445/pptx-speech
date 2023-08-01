@@ -11,11 +11,11 @@ COPY --from=fe-build /fe/dist /workspace/pptx-speech/dist
 
 WORKDIR /workspace/pptx-speech
 
-COPY ./script/setup.sh /script/setup.sh
+COPY pptx-speech/script/setup.sh /script/setup.sh
 RUN /script/setup.sh
 
-COPY pyproject.toml poetry.lock README.md ./
-COPY pptx_speech/__init__.py ./pptx_speech/__init__.py
+COPY pptx-speech/pyproject.toml poetry.lock README.md ./
+COPY pptx-speech/pptx_speech/__init__.py ./pptx_speech/__init__.py
 RUN /root/.local/bin/poetry env use python3.11 && /root/.local/bin/poetry install
 
 COPY pptx-speech .
