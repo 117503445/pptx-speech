@@ -8,7 +8,7 @@ class AzureTTS:
         self.speech_config = speechsdk.SpeechConfig(subscription=key, region=region, speech_recognition_language='zh')
         self.speech_config.speech_synthesis_voice_name='zh-CN-XiaoxiaoNeural'
 
-    @retry(stop=stop_after_attempt(3))
+    @retry(stop=stop_after_attempt(10))
     def tts(self, text: str, filename: Path):
         audio_config = speechsdk.audio.AudioOutputConfig(filename=str(filename.absolute()))
         speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=self.speech_config, audio_config=audio_config)

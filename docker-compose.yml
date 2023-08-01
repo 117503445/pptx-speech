@@ -10,7 +10,25 @@ services:
     volumes:
       - './src/pptx-speech:/workspace/pptx-speech'
       - './vsc_extensions/pptx-speech:/root/.vscode-server/extensions'
+
+      - './src/fe/dist:/workspace/pptx-speech/dist'
     # ports:
     #   - '8080:8080'
+    stdin_open: true
+    tty: true
+  pptx-speech-fe-dev:
+    build:
+      context: ./src/fe
+      dockerfile: Dockerfile_dev
+    container_name: pptx-speech-fe-dev
+
+    volumes:
+      - './src/fe:/workspace/fe'
+
+      - './vsc_extensions/fe:/root/.vscode-server/extensions'
+
+      - './src/fe/dist:/workspace/fe/dist'
+    ports:
+      - '5173:5173'
     stdin_open: true
     tty: true

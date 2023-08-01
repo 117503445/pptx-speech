@@ -13,20 +13,31 @@ from tts.azure import AzureTTS
 from image.pdf import save_images
 from video.ffmpeg import make_video
 from common.logger import create_main_logger
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import RedirectResponse
 
 cfg = get_cfg()
 azure_cfg = cfg['tts']['azure']
 azureTTS = AzureTTS(azure_cfg['key'], azure_cfg['region'])
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 logger = create_main_logger()
 
 poolExecutor = concurrent.futures.ProcessPoolExecutor(max_workers=1)
 
 
-dir_data = Path("data")
+dir_data = Path("web-data")
 
+dir_fe = Path(__file__).parent.parent / "dist"
 
 def make_resp(code: int = 0, data=None, msg: str = ""):
     if msg == "":
@@ -123,10 +134,15 @@ def create_task(dir_task: Path, file_pptx: Path, file_pdf: Path):
 @app.post("/api/task")
 async def parse_pdf(file_pptx: UploadFile, file_pdf: UploadFile):
     task_id = uuid.uuid4().hex
-
     dir_task = dir_data / task_id
 
     file_task = dir_task / "task.json"
+    file.write_json(
+        file_task,
+        {
+            "status": "pending",
+        },
+    )
 
     # TODO
     # if file_task.exists():
@@ -149,16 +165,17 @@ async def parse_pdf(file_pptx: UploadFile, file_pdf: UploadFile):
         buffer.write(content)
 
     dir_task.mkdir(parents=True, exist_ok=True)
-    file.write_json(
-        file_task,
-        {
-            "status": "pending",
-        },
-    )
+
 
     poolExecutor.submit(create_task, dir_task, dir_task / f"{task_id}.pptx", dir_task / f"{task_id}.pdf")
 
     return make_resp(data={"taskID": task_id})
 
+@app.get("/", response_class=RedirectResponse, status_code=302)
+async def redirect_index():
+    return "index.html"
 
+
+app.mount("/static", StaticFiles(directory=dir_data), name="static")
+app.mount("/", StaticFiles(directory=dir_fe), name="fe")
 uvicorn.run(app, host="0.0.0.0", port=8080)
