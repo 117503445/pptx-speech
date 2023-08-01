@@ -1,7 +1,7 @@
 import azure.cognitiveservices.speech as speechsdk
 from pathlib import Path
 from tenacity import retry, stop_after_attempt
-
+import xml.etree.ElementTree as ET
 
 class AzureTTS:
     def __init__(self, key: str, region: str):
@@ -13,8 +13,14 @@ class AzureTTS:
         audio_config = speechsdk.audio.AudioOutputConfig(filename=str(filename.absolute()))
         speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=self.speech_config, audio_config=audio_config)
 
-        # todo judge is illegal ssml
-        if text.startswith('<speak'):
+
+        try:
+            ET.fromstring(text)
+            is_valid_xml = True
+        except Exception:
+            is_valid_xml = False
+            
+        if is_valid_xml:
             speech_synthesis_result = speech_synthesizer.speak_ssml_async(text).get()
         else:
             speech_synthesis_result = speech_synthesizer.speak_text_async(text).get()
