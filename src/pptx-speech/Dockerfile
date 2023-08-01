@@ -14,7 +14,7 @@ WORKDIR /workspace/pptx-speech
 COPY pptx-speech/script/setup.sh /script/setup.sh
 RUN /script/setup.sh
 
-COPY pptx-speech/pyproject.toml poetry.lock README.md ./
+COPY pptx-speech/pyproject.toml pptx-speech/poetry.lock pptx-speech/README.md ./
 COPY pptx-speech/pptx_speech/__init__.py ./pptx_speech/__init__.py
 RUN /root/.local/bin/poetry env use python3.11 && /root/.local/bin/poetry install
 
