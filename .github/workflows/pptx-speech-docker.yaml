@@ -64,7 +64,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: ./src/pptx-speech
+          context: ./src
           file: ./src/pptx-speech/Dockerfile
           platforms: linux/amd64
           push: ${{ github.event_name != 'pull_request' }}
