@@ -39,7 +39,7 @@ function Task() {
     }
 
     useEffect(() => {
-        setTimer(setInterval(async () => {
+        setTimer(window.setInterval(async () => {
             await fetchTask();
         }, 3000));
 

@@ -8,7 +8,7 @@
 
 ![Alt text](doc/image-7.png)
 
-把 PPTX 每页的讲稿写在备注里，如 [example.pptx](doc/example.pptx) 所示
+把 PPTX 每页的讲稿写在备注里，如 [example.pptx](doc/example.pptx) 所示。如果要使用停顿、多音字纠正等功能，可以直接写 SSML，具体语法参考 [Azure SSML 文档结构和事件](https://learn.microsoft.com/zh-cn/azure/ai-services/speech-service/speech-synthesis-markup-structure)
 
 ![Alt text](doc/image.png)
 
