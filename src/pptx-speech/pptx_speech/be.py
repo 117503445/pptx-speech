@@ -52,6 +52,7 @@ def make_resp(code: int = 0, data=None, msg: str = ""):
 async def hello():
     return make_resp(msg="Hello, This is pptx_speech")
 
+# TODO executing for existing task before start server
 
 def create_task(dir_task: Path, file_pptx: Path, file_pdf: Path):
     file_task = dir_task / "task.json"
@@ -123,7 +124,7 @@ def create_task(dir_task: Path, file_pptx: Path, file_pdf: Path):
 
     logger.info(f"success to make video for {file_pptx}")
 
-    shutil.rmtree(dir_tmp)
+    # shutil.rmtree(dir_tmp)
     file.write_json(
         file_task,
         {
