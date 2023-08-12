@@ -14,7 +14,7 @@ def make_video(dir_image: Path, dir_audio: Path, dir_output: Path):
         file_video_list.append(file_output)
 
         if not file_output.exists():
-            print(file_image)
+            # print(file_image)
             with open(dir_output / f"{file_image.stem}.log", "w") as f:
                 subprocess.run(
                     [
@@ -49,7 +49,7 @@ def make_video(dir_image: Path, dir_audio: Path, dir_output: Path):
         #     str(file_output),
         # ])
 
-    print("combine video")
+    # print("combine video")
     # combine video
 
     files = "\n".join([f"file '{x.name}'" for x in file_video_list])
