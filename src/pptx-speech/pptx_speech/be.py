@@ -102,7 +102,7 @@ def process_task(dir_task: Path, file_pptx: Path, file_pdf: Path):
     logger.info(f"[{task_name}] tts")
     dir_audio = dir_tmp / "audio"
     dir_audio.mkdir(parents=True, exist_ok=True)
-    for file_note in dir_notes.glob("*.txt"):
+    for file_note in sorted(dir_notes.glob("*.txt")):
         file_audio = dir_audio / f"{file_note.stem}.wav"
         if not file_audio.exists():
             azureTTS.tts(file.read_text(file_note), file_audio)
