@@ -21,7 +21,7 @@ services:
       - '8080:8080'
 ```
 
-准备 `config/config.yaml` 文件
+准备 `config/config.yaml` 文件，记得根据 README.md 修改
 
 ```yaml
 tts:
